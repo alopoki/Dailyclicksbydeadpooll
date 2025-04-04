@@ -1,1 +1,133 @@
-j
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Clicks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url('https://wallpaperaccess.com/full/6060285.png') no-repeat center center/cover;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #message {
+            font-size: 26px;
+            font-weight: bold;
+            color: lightgreen;
+            margin-bottom: 20px;
+        }
+
+        #timer {
+            font-size: 50px;
+            font-weight: bold;
+            color: red;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.7);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #ffcc00;
+            color: black;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 30px;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #ff9900;
+        }
+
+        .tg-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #0088cc;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .tg-button:hover {
+            background: #006699;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3 id="heading">🎉 THANK YOU FOR YOUR DAILY CLICK!</h3>
+        <div id="message">✅ Your click has been counted for today.</div>
+        <div id="timer"></div>
+        <br>
+        <a href="https://t.me/https://t.me/DEAD_POOL_OFFICIAL_007" class="tg-button" target="_blank">📢 Join Our Telegram</a>
+    </div>
+
+    <script>
+        function getRemainingTime() {
+            let lastClickTime = localStorage.getItem("lastClickTime");
+            let currentTime = new Date().getTime();
+            let timeLeft = lastClickTime ? 86400000 - (currentTime - lastClickTime) : 0;
+            return timeLeft > 0 ? timeLeft : 0;
+        }
+
+        function updateTimer() {
+            let timeLeft = getRemainingTime();
+            let timerElement = document.getElementById("timer");
+            let headingElement = document.getElementById("heading");
+
+            if (timeLeft > 0) {
+                let hours = Math.floor(timeLeft / 3600000);
+                let minutes = Math.floor((timeLeft % 3600000) / 60000);
+                let seconds = Math.floor((timeLeft % 60000) / 1000);
+
+                timerElement.innerHTML = `<b>${hours}h ${minutes}m ${seconds}s</b>`;
+                setTimeout(updateTimer, 1000);
+            } else {
+                headingElement.innerHTML = "✔ You can click again now!";
+                timerElement.innerHTML = `<a href="#" class="button" onclick="resetClick()">Click Here</a>`;
+            }
+        }
+
+        function resetClick() {
+            localStorage.setItem("lastClickTime", new Date().getTime());
+            location.reload();
+        }
+
+        if (!localStorage.getItem("lastClickTime")) {
+            localStorage.setItem("lastClickTime", new Date().getTime());
+        }
+
+        updateTimer();
+    </script>
+</body>
+</html>
